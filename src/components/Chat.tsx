@@ -119,55 +119,57 @@ const sendMessage = async (manualText?: string, fromHome?: boolean) => {
   }
 
   return (
-    <div className="chat-pag px-28 h-[90vh]">
-     <div className="chat-log flex flex-col gap-2 pt-2">
-  {messages.length === 0 && (
-    <div className="empty text-gray-500 text-center">
-      Say something to {persona.name} 👋
-    </div>
-  )}
-
-  {messages.map((m, i) => (
-    <div
-      key={i}
-      className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
-    >
-      <div
-        className={`max-w-[50%] rounded-lg p-3 ${
-          m.role === "user"
-            ? "bg-green-200 rounded-br-none"
-            : "bg-white border border-gray-200 rounded-bl-none"
-        }`}
-      >
-        <div className="flex items-center justify-between text-xs text-black mb-1">
-          <span>{m.role === "user" ? "You" : persona.name}</span>
-          <button
-            className={`ml-2 ${m.starred ? "text-yellow-500" : "text-gray-400"}`}
-            onClick={() => toggleStar(i)}
-          >
-            {m.starred ? "★" : "☆"}
-          </button>
-        </div>
-        <div className="text-sm whitespace-pre-wrap text-black">{m.content}</div>
+   <div className="flex flex-col items-center h-[90vh] overflow-y-auto hide-scrollbar max-w-6xl mx-auto px-6">
+  {/* Messages */}
+  <div className="flex flex-col gap-2 pt-2 mb-24 w-full">
+    {messages.length === 0 && (
+      <div className="empty text-gray-500 text-center">
+        Say something to {persona.name} 👋
       </div>
-    </div>
-  ))}
-  <div ref={bottomRef} />
+    )}
+
+    {messages.map((m, i) => (
+      <div
+        key={i}
+        className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+      >
+        <div
+          className={`max-w-[70%] rounded-lg p-3 ${
+            m.role === "user"
+              ? "bg-green-200 rounded-br-none"
+              : "bg-white border border-gray-200 rounded-bl-none"
+          }`}
+        >
+          <div className="flex items-center justify-between text-xs text-black mb-1">
+            <span>{m.role === "user" ? "You" : persona.name}</span>
+            <button
+              className={`ml-2 ${m.starred ? "text-yellow-500" : "text-gray-400"}`}
+              onClick={() => toggleStar(i)}
+            >
+              {m.starred ? "★" : "☆"}
+            </button>
+          </div>
+          <div className="text-sm whitespace-pre-wrap text-black">{m.content}</div>
+        </div>
+      </div>
+    ))}
+    <div ref={bottomRef} />
+  </div>
+
+  {/* Input Bar */}
+  <div className="w-full flex gap-3 p-2 border-t border-gray-200 backdrop-blur-sm fixed bottom-0 max-w-6xl">
+    <input
+      className="flex-1 px-4 py-3 bg-white rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800 placeholder-gray-500"
+      placeholder={`Message ${persona.name}…`}
+      value={input}
+      onChange={e => setInput(e.target.value)}
+      onKeyDown={e => { if (e.key === 'Enter' && !loading) void sendMessage() }}
+    />
+    <button className="btn" onClick={() => void sendMessage()} disabled={loading}>
+      {loading ? 'Sending…' : 'Send'}
+    </button>
+  </div>
 </div>
 
-
-      <div className="text-black w-full flex gap-2">
-        <input
-          className="input"
-          placeholder={`Message ${persona.name}…`}
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => { if (e.key === 'Enter' && !loading) void sendMessage() }}
-        />
-        <button className="btn" onClick={() => void sendMessage()} disabled={loading}>
-          {loading ? 'Sending…' : 'Send'}
-        </button>
-      </div>
-    </div>
   )
 }

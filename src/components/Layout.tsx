@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="max-h-screen flex w-full">
+    <div className="h-screen flex w-full">
       <Sidebar />
       <div className="main w-full h-full">
         <Navbar />

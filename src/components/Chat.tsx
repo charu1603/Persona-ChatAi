@@ -119,7 +119,7 @@ const sendMessage = async (manualText?: string, fromHome?: boolean) => {
   }
 
   return (
-    <div className="chat-pag px-28">
+    <div className="chat-pag px-28 h-full">
      <div className="chat-log flex flex-col gap-2 pt-2">
   {messages.length === 0 && (
     <div className="empty text-gray-500 text-center">

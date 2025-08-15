@@ -1,4 +1,4 @@
-import type React from 'react'
+
 import { Link } from 'react-router-dom'
 import {  Home, MessageSquare, Settings } from "lucide-react"
 export default function Sidebar() {

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { usePersona } from '../context/PersonaContext'
 import { personas } from '../data/persona'
 

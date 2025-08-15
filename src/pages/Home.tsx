@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePersona } from '../context/PersonaContext'
 import { personas } from '../data/persona'
@@ -18,7 +18,7 @@ export default function HomePage() {
 
   return (
     <div className=" flex flex-col justify-center items-center">
-      {/* Main content area that takes remaining space */}
+   
       <div className="flex-1 flex flex-col justify-center items-center gap-8 px-4 py-22">
         <div className="text-center">
           <h1 className="text-gray-800 text-3xl font-bold mb-2">Choose Your Tech Mentor</h1>
@@ -71,7 +71,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Chat input fixed to bottom */}
+    
       <div className="w-full flex gap-3 p-2 border-gray-200 backdrop-blur-sm">
         <input
           className="flex-1 px-4 py-3 bg-white/80 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800 placeholder-gray-500"

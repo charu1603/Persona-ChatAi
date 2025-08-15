@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import  { useEffect, useMemo, useState } from 'react'
 import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 import { db } from '../firebase/firebaseConfig'
 import { personas } from '../data/persona'

@@ -17,7 +17,7 @@ export default function HomePage() {
 
 
   return (
-    <div className=" flex flex-col justify-center  relative">
+    <div className="h-[90vh] flex flex-col justify-center">
    
       <div className="flex-1 flex flex-col justify-center items-center gap-8 px-4 ">
         <div className="text-center">
@@ -72,7 +72,7 @@ export default function HomePage() {
       </div>
 
     
-      <div className="w-full flex gap-3 p-2 border-gray-200 backdrop-blur-sm absolute -bottom-0">
+      <div className="w-full flex gap-3 p-2 border-gray-200 backdrop-blur-sm ">
         <input
           className="flex-1 px-4 py-3 bg-white/80 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800 placeholder-gray-500"
           placeholder={`Ask ${persona.name} anything about tech... (press Enter)`}

@@ -65,49 +65,57 @@ const sendMessage = async (manualText?: string, fromHome?: boolean) => {
   if (!text) return;
 
   if (!fromHome) setLoading(true);
-  if (fromHome) setInitialLoading(true); // show loader for initial chat
+  if (fromHome) setInitialLoading(true);
 
-  // Messages array for API
   const msgsForApi = fromHome
     ? [systemMsg, { role: "user", content: text }]
     : [systemMsg, ...[...messages, { role: "user", content: text }].map(m => ({ role: m.role, content: m.content }))];
 
   try {
-    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${import.meta.env.VITE_GEMINI_API_KEY}`
-      },
-      body: JSON.stringify({ model: "gemini-2.0-flash", messages: msgsForApi })
-    });
+    const res = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_GEMINI_API_KEY}`,
+        },
+        body: JSON.stringify({ model: "gemini-2.0-flash", messages: msgsForApi }),
+      }
+    );
 
     const data = await res.json();
     const aiText = data.choices?.[0]?.message?.content ?? "…";
 
-    // For initial message, add **user + AI together**
+    const aiMsg: Message = { role: "assistant", content: aiText, starred: false };
+
     if (fromHome) {
       const userMsg: Message = { role: "user", content: text, starred: false };
-      const aiMsg: Message = { role: "assistant", content: aiText, starred: false };
-      setMessages([userMsg, aiMsg]);
+      setMessages(prev => [...prev, userMsg, aiMsg]);
       await detectAndStoreLinks(text);
       await detectAndStoreLinks(aiText);
-      setInitialLoading(false); // remove loader
+      setInitialLoading(false);
     } else {
-      const aiMsg: Message = { role: "assistant", content: aiText, starred: false };
-      setMessages(prev => [...prev, aiMsg]);
+      setMessages(prev => [...prev, { role: "user", content: text, starred: false }, aiMsg]);
       await detectAndStoreLinks(aiText);
     }
-
   } catch (e) {
     console.error(e);
     if (fromHome) setInitialLoading(false);
-    setMessages(prev => [...prev, { role: "assistant", content: "Error contacting Gemini API. Check API key.", starred: false }]);
+    setMessages(prev => [
+      ...prev,
+      {
+        role: "assistant",
+        content: "Error contacting Gemini API. Check API key.",
+        starred: false,
+      },
+    ]);
   } finally {
     if (!fromHome) setInput("");
     if (!fromHome) setLoading(false);
   }
 };
+
 
 
   const toggleStar = async (index: number) => {
